@@ -11,86 +11,100 @@
 <link href="https://fonts.googleapis.com">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-body{
-    font-family:'Source Sans 3', sans-serif;
-    overflow:hidden;
+body {
+  font-family: 'Source Sans 3', sans-serif;
+  overflow: hidden;
 }
 
-.slideshow{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
+.slideshow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
 }
 
-.slide{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    animation:fade 20s infinite;
+.slide {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  opacity: 0;
+  animation: fade 20s infinite;
 }
 
-.slide:nth-child(1){
-    background-image:url('images/photo1.jpg');
-    animation-delay:0s;
+.slide:nth-child(1) {
+  background-image: url("images/photo1.jpg");
+  animation-delay: 0s;
 }
 
-.slide:nth-child(2){
-    background-image:url('images/photo2.jpg');
-    animation-delay:5s;
+.slide:nth-child(2) {
+  background-image: url("images/photo2.jpg");
+  animation-delay: 5s;
 }
 
-.slide:nth-child(3){
-    background-image:url('images/photo3.jpg');
-    animation-delay:10s;
+.slide:nth-child(3) {
+  background-image: url("images/photo3.jpg");
+  animation-delay: 10s;
 }
 
-.slide:nth-child(4){
-    background-image:url('images/photo4.jpg');
-    animation-delay:15s;
+.slide:nth-child(4) {
+  background-image: url("images/photo4.jpg");
+  animation-delay: 15s;
 }
 
-@keyframes fade{
-    0%,100% { opacity:0; }
-    5%,25% { opacity:1; }
-    30% { opacity:0; }
+@keyframes fade {
+  0%,100% {
+    opacity: 0;
+  }
+  5%,25% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0;
+  }
 }
 
-.overlay{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
 
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-
-    background:rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-.logo{
-    width:250px;
-    margin-bottom:20px;
+.logo {
+  width: 220px;
+  max-width: 60vw;
+  margin-bottom: 30px;
 }
 
-.title{
-    color:white;
-    font-size:4rem;
-    font-weight:700;
-    letter-spacing:8px;
+.title {
+  color: white;
+  font-size: 5rem;
+  font-weight: 700;
+  letter-spacing: 10px;
+  text-shadow: 0 0 20px rgba(0,0,0,.5);
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .logo {
+    width: 140px;
+  }
 }
 </style>
 </head>
@@ -98,15 +112,15 @@ body{
 <body>
 
 <div class="slideshow">
-    <div class="slide"></div>
-    <div class="slide"></div>
-    <div class="slide"></div>
-    <div class="slide"></div>
+  <div class="slide"></div>
+  <div class="slide"></div>
+  <div class="slide"></div>
+  <div class="slide"></div>
 </div>
 
 <div class="overlay">
-    images/logo.png
-    <div class="title">SEARCH-IN</div>
+  images/logo.png
+  <div class="title">SEARCH-IN</div>
 </div>
 
 </body>
