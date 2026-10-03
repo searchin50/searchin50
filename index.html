@@ -34,9 +34,8 @@
             position: fixed;
             inset: 0;
             width: 100%;
-            height: 100%;
+            height: 100vh;
             background: #000;
-            overflow: hidden;
         }
 
         .slide {
@@ -44,51 +43,40 @@
             inset: 0;
             width: 100%;
             height: 100%;
-
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-
             opacity: 0;
             transition: opacity 2s ease-in-out;
-            will-change: opacity;
         }
 
         .slide.active {
             opacity: 1;
         }
 
-        /* CENTER OVERLAY */
+        /* DARK OVERLAY */
 
         .overlay {
             position: fixed;
             inset: 0;
             width: 100%;
-            height: 100%;
-
+            height: 100vh;
+            padding: 24px;
             background: rgba(0, 0, 0, 0.35);
-
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
-
-            /* Keep branding above the photos */
-            z-index: 10;
-            pointer-events: none;
         }
 
         /* SEARCH-IN LOGO */
 
-        .overlay img {
+        .logo {
             width: 100px;
             max-width: 80%;
             margin-bottom: 20px;
-
-            filter: drop-shadow(
-                0 4px 15px rgba(0, 0, 0, 0.6)
-            );
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
         }
 
         /* MAIN TITLE */
@@ -98,9 +86,7 @@
             font-size: 4rem;
             font-weight: 400;
             letter-spacing: 8px;
-
-            text-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.6);
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
         }
 
         /* YEAR */
@@ -111,21 +97,71 @@
             font-weight: 400;
             letter-spacing: 5px;
             margin-top: 12px;
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+        }
 
-            text-shadow:
-                0 4px 10px rgba(0, 0, 0, 0.6);
+        /* SOCIAL MEDIA BUTTONS */
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+            margin-top: 28px;
+        }
+
+        .social-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 44px;
+            height: 44px;
+            color: white;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.75);
+            border-radius: 50%;
+            text-decoration: none;
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+        .social-button svg {
+            width: 21px;
+            height: 21px;
+            fill: currentColor;
+        }
+
+        .social-button:hover,
+        .social-button:focus-visible {
+            color: #111;
+            background: white;
+            border-color: white;
+            transform: translateY(-3px);
+            outline: none;
+        }
+
+        .social-button:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 4px;
         }
 
         /* MOBILE */
 
         @media (max-width: 768px) {
-            .overlay img {
+            .overlay {
+                padding: 20px;
+            }
+
+            .logo {
                 width: 80px;
                 margin-bottom: 18px;
             }
 
             .title {
-                font-size: 2.5rem;
+                font-size: clamp(1.8rem, 7vw, 2.5rem);
                 letter-spacing: 4px;
             }
 
@@ -133,12 +169,26 @@
                 font-size: 1rem;
                 letter-spacing: 4px;
             }
+
+            .social-links {
+                gap: 13px;
+                margin-top: 24px;
+            }
+
+            .social-button {
+                width: 42px;
+                height: 42px;
+            }
+
+            .social-button svg {
+                width: 20px;
+                height: 20px;
+            }
         }
 
-        /* Respect reduced-motion preferences */
-
         @media (prefers-reduced-motion: reduce) {
-            .slide {
+            .slide,
+            .social-button {
                 transition: none;
             }
         }
@@ -148,426 +198,290 @@
 <body>
 
     <!-- PHOTO SLIDESHOW -->
-
     <div class="slideshow" id="slideshow">
         <div class="slide" id="slideA"></div>
         <div class="slide" id="slideB"></div>
     </div>
 
     <!-- CENTER CONTENT -->
+    <main class="overlay">
 
-    <div class="overlay">
-        <img src="logo.png" alt="Search-In Logo">
+        <img
+            class="logo"
+            src="logo.png"
+            alt="Search-In Logo"
+        >
 
-        <div class="title">
-            THE ROAD TO 50
-        </div>
+        <div class="title">THE ROAD TO 50</div>
 
-        <div class="year">
-            2028
-        </div>
-    </div>
+        <div class="year">2028</div>
+
+        <!-- SOCIAL MEDIA LINKS -->
+        <nav class="social-links" aria-label="Search-In social media">
+
+            <!-- FACEBOOK -->
+            <a
+                class="social-button"
+                href="https://www.facebook.com/LSGHSearchIn"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Search-In on Facebook"
+                title="Facebook"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.2v3.2H10V21h3.4z"/>
+                </svg>
+            </a>
+
+            <!-- INSTAGRAM -->
+            <a
+                class="social-button"
+                href="https://www.instagram.com/searchinlsgh"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Search-In on Instagram"
+                title="Instagram"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <rect
+                        x="3"
+                        y="3"
+                        width="18"
+                        height="18"
+                        rx="5"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+                    <circle
+                        cx="12"
+                        cy="12"
+                        r="4"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    />
+                    <circle cx="17.5" cy="6.8" r="1.2"/>
+                </svg>
+            </a>
+
+            <!-- X -->
+            <a
+                class="social-button"
+                href="https://x.com/searchinlsgh"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Visit Search-In on X"
+                title="X"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 13.9 4.9 22H1.8l7.3-8.4L1.3 2h6.4l4.5 7.5L18.9 2zm-1.1 18h1.7L6.8 3.9H5L17.8 20z"/>
+                </svg>
+            </a>
+
+            <!-- SPOTIFY -->
+            <a
+                class="social-button"
+                href="https://open.spotify.com/playlist/7uftqd0JLpVEjTf4bv41o9?si=83c557d81d8141dc"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Listen to the Search-In playlist on Spotify"
+                title="Spotify"
+            >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.5a.8.8 0 0 1-1.1.3c-2.8-1.7-6.3-2.1-10.4-1.1a.8.8 0 1 1-.4-1.5c4.5-1 8.4-.6 11.6 1.3.4.2.5.7.3 1zm1.5-3.2a1 1 0 0 1-1.3.3c-3.2-2-8-2.6-11.7-1.4a1 1 0 1 1-.6-1.8c4.3-1.3 9.6-.7 13.3 1.6.5.3.6.9.3 1.3zm.1-3.3c-3.8-2.3-10-2.5-13.6-1.4a1.1 1.1 0 0 1-.7-2.1c4.2-1.3 11-1.1 15.4 1.6a1.1 1.1 0 0 1-1.1 1.9z"/>
+                </svg>
+            </a>
+
+        </nav>
+    </main>
 
     <script>
-        /*
-        ================================================
-        SEARCH-IN: THE ROAD TO 50
-        ================================================
-
-        - Automatically finds photos in images/
-        - No photo renaming required
-        - Randomized photo order
-        - Two-layer crossfade
-        - Preloads each next photo before transitioning
-        - Skips broken or unsupported images
-        - Keeps the current photo visible during loading
-        - Supports JPG, JPEG, PNG, and WEBP
-
-        Required structure:
-
-        index.html
-        logo.png
-        images/
-            photo1.jpg
-            photo2.jpeg
-            old-photo.png
-            anything.webp
-        ================================================
-        */
-
         async function loadPhotos() {
-            const slideshow =
-                document.getElementById("slideshow");
-
-            const slideA =
-                document.getElementById("slideA");
-
-            const slideB =
-                document.getElementById("slideB");
+            const slideshow = document.getElementById("slideshow");
+            const slideA = document.getElementById("slideA");
+            const slideB = document.getElementById("slideB");
 
             try {
-                /*
-                STEP 1: DETERMINE REPOSITORY
-                */
-
-                const hostname =
-                    window.location.hostname;
-
-                const pathname =
-                    window.location.pathname;
+                const hostname = window.location.hostname;
+                const pathname = window.location.pathname;
 
                 let owner;
                 let repo;
 
                 if (hostname.endsWith(".github.io")) {
-                    owner = hostname.replace(
-                        ".github.io",
-                        ""
-                    );
+                    owner = hostname.replace(".github.io", "");
 
                     const pathParts = pathname
                         .split("/")
                         .filter(Boolean);
 
-                    repo = pathParts[0];
+                    // Project Pages sites have a repository in the URL.
+                    // For a username.github.io site, use that repository name.
+                    repo = pathParts[0] || `${owner}.github.io`;
                 }
 
                 if (!owner || !repo) {
                     throw new Error(
-                        "Could not determine GitHub repository. " +
-                        "This script expects a GitHub Pages URL."
+                        "Could not determine the GitHub repository from this URL."
                     );
                 }
 
-                /*
-                STEP 2: FETCH IMAGE LIST
-                */
-
                 const apiURL =
-                    `https://api.github.com/repos/` +
-                    `${owner}/${repo}/contents/images`;
+                    `https://api.github.com/repos/${owner}/${repo}/contents/images`;
 
                 const response = await fetch(apiURL);
 
                 if (!response.ok) {
-                    throw new Error(
-                        `GitHub API returned ${response.status}. ` +
-                        "Check the repository name, images folder, " +
-                        "and GitHub API rate limit."
-                    );
+                    throw new Error("Could not access the images folder.");
                 }
 
                 const files = await response.json();
 
-                if (!Array.isArray(files)) {
-                    throw new Error(
-                        "The images path did not return a file list."
-                    );
-                }
-
-                /*
-                STEP 3: FILTER PHOTOS
-                */
-
-                const supportedExtensions = [
-                    ".jpg",
-                    ".jpeg",
-                    ".png",
-                    ".webp"
-                ];
-
                 let imageFiles = files.filter(file => {
-                    if (file.type !== "file") {
-                        return false;
-                    }
-
-                    const name =
-                        file.name.toLowerCase();
+                    const name = file.name.toLowerCase();
 
                     const isImage =
-                        supportedExtensions.some(
-                            ext => name.endsWith(ext)
-                        );
+                        /\.(jpg|jpeg|png|webp)$/i.test(name);
 
                     const isLogo =
-                        /^logo\.(jpg|jpeg|png|webp)$/i
-                            .test(file.name);
+                        /^logo\.(jpg|jpeg|png|webp)$/i.test(name);
 
-                    return (
+                    return file.type === "file" &&
                         isImage &&
                         !isLogo &&
-                        typeof file.download_url === "string"
-                    );
+                        file.download_url;
                 });
 
+                // Randomize the order of the photos.
+                for (let i = imageFiles.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [imageFiles[i], imageFiles[j]] =
+                        [imageFiles[j], imageFiles[i]];
+                }
+
                 if (imageFiles.length === 0) {
-                    throw new Error(
-                        "No supported photos found in images/."
-                    );
+                    throw new Error("No photos found in the images folder.");
                 }
 
-                /*
-                STEP 4: RANDOMIZE PHOTO ORDER
-                */
-
-                for (
-                    let i = imageFiles.length - 1;
-                    i > 0;
-                    i--
-                ) {
-                    const j = Math.floor(
-                        Math.random() * (i + 1)
-                    );
-
-                    [
-                        imageFiles[i],
-                        imageFiles[j]
-                    ] = [
-                        imageFiles[j],
-                        imageFiles[i]
-                    ];
-                }
-
-                /*
-                STEP 5: PRELOAD AND VERIFY PHOTOS
-
-                A photo is only shown after the browser
-                confirms that it has loaded and decoded.
-
-                If a photo fails, it is skipped.
-                */
-
+                // Preload a photo and verify that it can be displayed.
                 function preloadImage(url) {
                     return new Promise(resolve => {
-                        const img = new Image();
+                        const image = new Image();
                         let finished = false;
 
                         function finish(success) {
                             if (finished) return;
                             finished = true;
-
-                            img.onload = null;
-                            img.onerror = null;
-
-                            resolve(success ? img : null);
+                            resolve(success ? url : null);
                         }
 
-                        img.onload = async () => {
+                        image.onload = async () => {
                             try {
-                                if (img.decode) {
-                                    await img.decode();
+                                if (image.decode) {
+                                    await image.decode();
                                 }
 
-                                finish(
-                                    img.naturalWidth > 0 &&
-                                    img.naturalHeight > 0
-                                );
+                                finish(image.naturalWidth > 0);
                             } catch {
-                                // Some browsers can reject decode()
-                                // even when the image is displayable.
-                                finish(
-                                    img.naturalWidth > 0 &&
-                                    img.naturalHeight > 0
-                                );
+                                finish(image.naturalWidth > 0);
                             }
                         };
 
-                        img.onerror = () => finish(false);
+                        image.onerror = () => finish(false);
+                        image.src = url;
 
-                        img.src = url;
-
-                        // Handle images already available in cache.
-                        if (img.complete && img.naturalWidth > 0) {
-                            if (img.decode) {
-                                img.decode()
-                                    .then(() => finish(true))
-                                    .catch(() => {
-                                        finish(
-                                            img.naturalWidth > 0
-                                        );
-                                    });
-                            } else {
-                                finish(true);
-                            }
+                        // Handle cached images that may already be ready.
+                        if (image.complete && image.naturalWidth > 0) {
+                            finish(true);
                         }
                     });
                 }
 
-                /*
-                STEP 6: FIND THE FIRST WORKING PHOTO
+                function wait(ms) {
+                    return new Promise(resolve => setTimeout(resolve, ms));
+                }
 
-                Do not display an empty slide while loading.
-                */
-
-                let firstImage = null;
+                // Find the first photo that loads successfully.
                 let currentIndex = -1;
+                let firstURL = null;
 
-                for (
-                    let i = 0;
-                    i < imageFiles.length;
-                    i++
-                ) {
-                    const candidate =
-                        imageFiles[i].download_url;
+                for (let i = 0; i < imageFiles.length; i++) {
+                    const url = await preloadImage(imageFiles[i].download_url);
 
-                    const loaded =
-                        await preloadImage(candidate);
-
-                    if (loaded) {
-                        firstImage = candidate;
+                    if (url) {
                         currentIndex = i;
-
-                        console.log(
-                            "First photo loaded:",
-                            imageFiles[i].name
-                        );
-
+                        firstURL = url;
                         break;
                     }
-
-                    console.warn(
-                        "Skipping unreadable photo:",
-                        imageFiles[i].name
-                    );
                 }
 
-                if (!firstImage) {
-                    throw new Error(
-                        "None of the photos could be loaded. " +
-                        "Check their file formats and URLs."
-                    );
+                if (!firstURL) {
+                    throw new Error("None of the slideshow photos could be loaded.");
                 }
 
-                /*
-                STEP 7: SHOW FIRST PHOTO
-                */
+                let currentLayer = slideA;
+                let nextLayer = slideB;
 
-                let activeSlide = slideA;
-                let inactiveSlide = slideB;
+                currentLayer.style.backgroundImage =
+                    `url("${firstURL}")`;
 
-                activeSlide.style.backgroundImage =
-                    `url("${firstImage}")`;
+                currentLayer.classList.add("active");
 
-                activeSlide.classList.add("active");
+                // Keep trying other photos if one fails to load.
+                async function showNextPhoto() {
+                    await wait(3000);
 
-                /*
-                STEP 8: SAFE CROSSFADE
+                    let nextURL = null;
+                    let attempts = 0;
 
-                Keep the current photo visible until the
-                next one has loaded successfully.
+                    while (attempts < imageFiles.length) {
+                        currentIndex = (currentIndex + 1) % imageFiles.length;
+                        attempts++;
 
-                Only one transition runs at a time.
-                */
-
-                const DISPLAY_TIME = 5000;
-                const FADE_TIME = 2000;
-
-                const wait = ms =>
-                    new Promise(resolve =>
-                        setTimeout(resolve, ms)
-                    );
-
-                async function nextPhoto() {
-                    /*
-                    Try each remaining photo in shuffled order.
-                    A failed image never replaces the current one.
-                    */
-
-                    for (
-                        let attempts = 0;
-                        attempts < imageFiles.length;
-                        attempts++
-                    ) {
-                        currentIndex =
-                            (currentIndex + 1) %
-                            imageFiles.length;
-
-                        const file =
-                            imageFiles[currentIndex];
-
-                        const loaded =
-                            await preloadImage(
-                                file.download_url
-                            );
-
-                        if (!loaded) {
-                            console.warn(
-                                "Photo failed to load; skipping:",
-                                file.name
-                            );
-
-                            continue;
-                        }
-
-                        /*
-                        Prepare the hidden layer first.
-                        */
-
-                        inactiveSlide.style.backgroundImage =
-                            `url("${file.download_url}")`;
-
-                        /*
-                        Force the browser to register the
-                        hidden state before enabling the fade.
-                        */
-
-                        void inactiveSlide.offsetWidth;
-
-                        inactiveSlide.classList.add("active");
-
-                        /*
-                        Wait for the crossfade to finish
-                        before reusing the previous layer.
-                        */
-
-                        await wait(FADE_TIME + 100);
-
-                        activeSlide.classList.remove("active");
-
-                        /*
-                        Swap layer references.
-                        The newly visible image is now active.
-                        */
-
-                        const previousSlide = activeSlide;
-
-                        activeSlide = inactiveSlide;
-                        inactiveSlide = previousSlide;
-
-                        console.log(
-                            "Now displaying:",
-                            file.name
+                        nextURL = await preloadImage(
+                            imageFiles[currentIndex].download_url
                         );
 
-                        return true;
+                        if (nextURL) break;
                     }
 
-                    console.error(
-                        "No additional readable photos found. " +
-                        "Keeping the last visible photo."
+                    // If all photos fail, keep the current photo visible.
+                    if (!nextURL) {
+                        showNextPhoto();
+                        return;
+                    }
+
+                    // Load the next image on the hidden layer first.
+                    nextLayer.style.backgroundImage =
+                        `url("${nextURL}")`;
+
+                    // Allow the browser to register the new background.
+                    await new Promise(resolve =>
+                        requestAnimationFrame(() =>
+                            requestAnimationFrame(resolve)
+                        )
                     );
 
-                    return false;
+                    // Crossfade between the two layers.
+                    nextLayer.classList.add("active");
+                    await wait(2000);
+
+                    currentLayer.classList.remove("active");
+
+                    const oldLayer = currentLayer;
+                    currentLayer = nextLayer;
+                    nextLayer = oldLayer;
+
+                    showNextPhoto();
                 }
 
-                /*
-                STEP 9: RUN SLIDESHOW
+                showNextPhoto();
 
-                A sequential loop prevents overlapping timers
-                and competing transitions.
-                */
-
-                while (true) {
-                    await wait(DISPLAY_TIME);
-
-                    await nextPhoto();
-                }
+                console.log(`Loaded slideshow with ${imageFiles.length} photos.`);
 
             } catch (error) {
-                console.error(
-                    "Slideshow initialization failed:",
-                    error
-                );
+                console.error("Could not load slideshow photos:", error);
             }
         }
 
