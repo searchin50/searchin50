@@ -1,130 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search-In — The Road to 50</title>
 
-<title>THE ROAD TO 50</title>
+<!-- Source Sans Pro -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap" rel="stylesheet">
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-body{
-    font-family:"Segoe UI", Arial, sans-serif;
-    overflow:hidden;
-}
-
-.slideshow{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
-}
-
-.slide{
-    position:absolute;
-    width:100%;
-    height:100%;
-    background-size:cover;
-    background-position:center;
-    opacity:0;
-    animation:fade 20s infinite;
-}
-
-.slide:nth-child(1){
-    background-image:url('images/photo1.jpg');
-    animation-delay:0s;
-}
-
-.slide:nth-child(2){
-    background-image:url('images/photo2.jpg');
-    animation-delay:5s;
-}
-
-.slide:nth-child(3){
-    background-image:url('images/photo3.jpg');
-    animation-delay:10s;
-}
-
-.slide:nth-child(4){
-    background-image:url('images/photo4.jpg');
-    animation-delay:15s;
-}
-
-@keyframes fade{
-    0%,100%{
-        opacity:0;
-    }
-    5%,25%{
-        opacity:1;
-    }
-    30%{
-        opacity:0;
-    }
-}
-
-.overlay{
-    position:absolute;
-    top:0;
-    left:0;
-    width:100%;
-    height:100vh;
-    background:rgba(0,0,0,0.35);
-
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-    text-align:center;
-}
-
-/* Logo */
-.overlay img{
-    width:220px;
-    max-width:80%;
-    margin-bottom:20px;
-    filter:drop-shadow(0 4px 15px rgba(0,0,0,0.6));
-}
-
-.title{
-    color:white;
-    font-size:5rem;
-    font-weight:700;
-    letter-spacing:8px;
-    text-shadow:0 4px 10px rgba(0,0,0,0.6);
-}
-
-@media (max-width:768px){
-    .title{
-        font-size:3rem;
-        letter-spacing:4px;
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
     }
 
-    .overlay img{
-        width:160px;
+    body {
+        font-family: "Source Sans Pro", sans-serif;
+        overflow: hidden;
+        background: #000;
     }
-}
+
+    /* -------------------------
+       PHOTO SLIDESHOW
+    ------------------------- */
+
+    .slideshow {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+    }
+
+    .slide {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+        background-size: cover;
+        background-position: center;
+
+        opacity: 0;
+        animation: fade 20s infinite;
+    }
+
+    .slide:nth-child(1) {
+        background-image: url('images/photo1.jpg');
+        animation-delay: 0s;
+    }
+
+    .slide:nth-child(2) {
+        background-image: url('images/photo2.jpg');
+        animation-delay: 5s;
+    }
+
+    .slide:nth-child(3) {
+        background-image: url('images/photo3.jpg');
+        animation-delay: 10s;
+    }
+
+    .slide:nth-child(4) {
+        background-image: url('images/photo4.jpg');
+        animation-delay: 15s;
+    }
+
+    /* Smooth photo transition */
+    @keyframes fade {
+        0%, 100% {
+            opacity: 0;
+        }
+
+        5%, 25% {
+            opacity: 1;
+        }
+
+        30% {
+            opacity: 0;
+        }
+    }
+
+    /* -------------------------
+       DARK PHOTO OVERLAY
+    ------------------------- */
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        width: 100%;
+        height: 100vh;
+
+        background: rgba(0, 0, 0, 0.35);
+
+        display: flex;
+        flex-direction: column;
+
+        justify-content: center;
+        align-items: center;
+
+        text-align: center;
+    }
+
+    /* -------------------------
+       SEARCH-IN LOGO
+    ------------------------- */
+
+    .overlay img {
+        width: 100px;
+        max-width: 80%;
+
+        margin-bottom: 20px;
+
+        filter:
+            drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
+    }
+
+    /* -------------------------
+       MAIN TITLE
+    ------------------------- */
+
+    .title {
+        color: white;
+
+        font-size: 4rem;
+        font-weight: 400;
+
+        letter-spacing: 8px;
+
+        text-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* -------------------------
+       YEAR
+    ------------------------- */
+
+    .year {
+        color: white;
+
+        font-size: 1.2rem;
+        font-weight: 400;
+
+        letter-spacing: 5px;
+
+        margin-top: 12px;
+
+        text-shadow:
+            0 4px 10px rgba(0, 0, 0, 0.6);
+    }
+
+    /* -------------------------
+       MOBILE
+    ------------------------- */
+
+    @media (max-width: 768px) {
+
+        .overlay img {
+            width: 80px;
+            margin-bottom: 18px;
+        }
+
+        .title {
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+        }
+
+        .year {
+            font-size: 1rem;
+            letter-spacing: 4px;
+        }
+    }
 </style>
 </head>
-
 <body>
+<!-- PHOTO SLIDESHOW -->
 
 <div class="slideshow">
+
     <div class="slide"></div>
     <div class="slide"></div>
     <div class="slide"></div>
     <div class="slide"></div>
+
 </div>
+
+
+<!-- CENTER CONTENT -->
 
 <div class="overlay">
-    <img src="images/logo.png" alt="Search-In Logo">
-    <div class="title">THE ROAD TO 50</div>
-</div>
 
+    <img
+        src="images/logo.png"
+        alt="Search-In Logo"
+    >
+
+    <div class="title">
+        THE ROAD TO 50
+    </div>
+
+    <div class="year">
+        2028
+    </div>
+
+</div>
 </body>
 </html>
