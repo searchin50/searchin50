@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,554 +10,314 @@
     <!-- Source Sans Pro Regular -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link
-        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400&display=swap"
         rel="stylesheet"
     >
 
     <style>
-
-        /* =====================================
-           BASIC RESET
-        ===================================== */
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-
         body {
             font-family: "Source Sans Pro", sans-serif;
-
             overflow: hidden;
-
             background: #000;
         }
 
-
-        /* =====================================
-           SLIDESHOW
-        ===================================== */
+        /* SLIDESHOW */
 
         .slideshow {
-
             position: fixed;
-
             inset: 0;
-
             width: 100%;
-            height: 100vh;
-
+            height: 100%;
             background: #000;
+            overflow: hidden;
         }
 
-
-        /* Each individual photo */
-
         .slide {
-
             position: absolute;
-
             inset: 0;
-
             width: 100%;
             height: 100%;
 
             background-size: cover;
-
             background-position: center;
-
             background-repeat: no-repeat;
 
-            /*
-             * Every photo starts invisible.
-             */
-
             opacity: 0;
-
-            /*
-             * This creates the smooth
-             * crossfade between photos.
-             */
-
-            transition:
-                opacity 2s ease-in-out;
-
+            transition: opacity 2s ease-in-out;
+            will-change: opacity;
         }
-
-
-        /*
-         * The currently visible photo.
-         */
 
         .slide.active {
-
             opacity: 1;
-
         }
 
-
-        /* =====================================
-           DARK OVERLAY
-        ===================================== */
+        /* CENTER OVERLAY */
 
         .overlay {
-
             position: fixed;
-
             inset: 0;
-
             width: 100%;
-            height: 100vh;
+            height: 100%;
 
-            /*
-             * Slight darkening so the white
-             * text remains readable.
-             */
-
-            background:
-                rgba(0, 0, 0, 0.35);
+            background: rgba(0, 0, 0, 0.35);
 
             display: flex;
-
             flex-direction: column;
-
             justify-content: center;
-
             align-items: center;
-
             text-align: center;
 
+            /* Keep branding above the photos */
+            z-index: 10;
+            pointer-events: none;
         }
 
-
-        /* =====================================
-           SEARCH-IN LOGO
-        ===================================== */
+        /* SEARCH-IN LOGO */
 
         .overlay img {
-
             width: 100px;
-
             max-width: 80%;
-
             margin-bottom: 20px;
 
-            filter:
-                drop-shadow(
-                    0 4px 15px
-                    rgba(0, 0, 0, 0.6)
-                );
-
+            filter: drop-shadow(
+                0 4px 15px rgba(0, 0, 0, 0.6)
+            );
         }
 
-
-        /* =====================================
-           MAIN TITLE
-        ===================================== */
+        /* MAIN TITLE */
 
         .title {
-
             color: white;
-
             font-size: 4rem;
-
-            /*
-             * Regular weight —
-             * NOT bold.
-             */
-
-            font-weight: 900;
-
+            font-weight: 400;
             letter-spacing: 8px;
 
             text-shadow:
-                0 4px 10px
-                rgba(0, 0, 0, 0.6);
-
+                0 4px 10px rgba(0, 0, 0, 0.6);
         }
 
-
-        /* =====================================
-           YEAR
-        ===================================== */
+        /* YEAR */
 
         .year {
-
             color: white;
-
             font-size: 2rem;
-
             font-weight: 400;
-
             letter-spacing: 5px;
-
             margin-top: 12px;
 
             text-shadow:
-                0 4px 10px
-                rgba(0, 0, 0, 0.6);
-
+                0 4px 10px rgba(0, 0, 0, 0.6);
         }
 
-
-        /* =====================================
-           MOBILE
-        ===================================== */
+        /* MOBILE */
 
         @media (max-width: 768px) {
-
             .overlay img {
-
                 width: 80px;
-
                 margin-bottom: 18px;
-
             }
-
 
             .title {
-
                 font-size: 2.5rem;
-
                 letter-spacing: 4px;
-
             }
-
 
             .year {
-
                 font-size: 1rem;
-
                 letter-spacing: 4px;
-
             }
-
         }
 
+        /* Respect reduced-motion preferences */
+
+        @media (prefers-reduced-motion: reduce) {
+            .slide {
+                transition: none;
+            }
+        }
     </style>
-
 </head>
-
 
 <body>
 
+    <!-- PHOTO SLIDESHOW -->
 
-    <!-- =====================================
-         PHOTO SLIDESHOW
-    ===================================== -->
-
-    <div
-        class="slideshow"
-        id="slideshow">
+    <div class="slideshow" id="slideshow">
+        <div class="slide" id="slideA"></div>
+        <div class="slide" id="slideB"></div>
     </div>
 
-
-
-    <!-- =====================================
-         CENTER CONTENT
-    ===================================== -->
+    <!-- CENTER CONTENT -->
 
     <div class="overlay">
-
-
-        <!-- Search-In logo -->
-
-        <img
-            src="logo.png"
-            alt="Search-In Logo"
-        >
-
-
-        <!-- Main title -->
+        <img src="logo.png" alt="Search-In Logo">
 
         <div class="title">
-
             THE ROAD TO 50
-
         </div>
-
-
-        <!-- Year -->
 
         <div class="year">
-
             2028
-
         </div>
-
-
     </div>
 
-
-
-    <!-- =====================================
-         JAVASCRIPT
-    ===================================== -->
-
     <script>
-
-
         /*
-        ==================================================
-        SEARCH-IN — THE ROAD TO 50
-        ==================================================
+        ================================================
+        SEARCH-IN: THE ROAD TO 50
+        ================================================
 
-        This script automatically finds every image
-        inside the "images" folder.
+        - Automatically finds photos in images/
+        - No photo renaming required
+        - Randomized photo order
+        - Two-layer crossfade
+        - Preloads each next photo before transitioning
+        - Skips broken or unsupported images
+        - Keeps the current photo visible during loading
+        - Supports JPG, JPEG, PNG, and WEBP
 
-        You DON'T need to rename your photos.
+        Required structure:
 
-        Example:
-
+        index.html
+        logo.png
         images/
-        ├── logo.png
-        ├── IMG_8273.jpg
-        ├── retreat_1984.jpeg
-        ├── old-photo.png
-        ├── SearchIn-Batch-2001.webp
-        └── anything-you-want.jpg
-
-
-        Supported formats:
-
-        JPG
-        JPEG
-        PNG
-        WEBP
-
-
-        logo.png is automatically excluded.
-
-        Photos are randomized every time the
-        website loads.
-
-        ==================================================
+            photo1.jpg
+            photo2.jpeg
+            old-photo.png
+            anything.webp
+        ================================================
         */
 
-
         async function loadPhotos() {
-
-
-            /* ------------------------------------------
-               GET SLIDESHOW CONTAINER
-            ------------------------------------------ */
-
             const slideshow =
-                document.getElementById(
-                    "slideshow"
-                );
+                document.getElementById("slideshow");
 
+            const slideA =
+                document.getElementById("slideA");
+
+            const slideB =
+                document.getElementById("slideB");
 
             try {
-
-
-                /* --------------------------------------
-                   DETERMINE GITHUB REPOSITORY
-                -------------------------------------- */
+                /*
+                STEP 1: DETERMINE REPOSITORY
+                */
 
                 const hostname =
                     window.location.hostname;
 
-
                 const pathname =
                     window.location.pathname;
 
-
                 let owner;
-
                 let repo;
 
+                if (hostname.endsWith(".github.io")) {
+                    owner = hostname.replace(
+                        ".github.io",
+                        ""
+                    );
+
+                    const pathParts = pathname
+                        .split("/")
+                        .filter(Boolean);
+
+                    repo = pathParts[0];
+                }
+
+                if (!owner || !repo) {
+                    throw new Error(
+                        "Could not determine GitHub repository. " +
+                        "This script expects a GitHub Pages URL."
+                    );
+                }
 
                 /*
-                 * GitHub Pages normally looks like:
-                 *
-                 * username.github.io/repository/
-                 */
-
-                if (
-                    hostname.endsWith(
-                        ".github.io"
-                    )
-                ) {
-
-
-                    /*
-                     * Get GitHub username
-                     */
-
-                    owner =
-                        hostname.replace(
-                            ".github.io",
-                            ""
-                        );
-
-
-                    /*
-                     * Get repository name
-                     */
-
-                    const pathParts =
-                        pathname
-                            .split("/")
-                            .filter(
-                                part =>
-                                    part.length > 0
-                            );
-
-
-                    repo =
-                        pathParts[0];
-
-                }
-
-
-                /* --------------------------------------
-                   MAKE SURE REPOSITORY WAS FOUND
-                -------------------------------------- */
-
-                if (
-                    !owner ||
-                    !repo
-                ) {
-
-                    console.error(
-                        "Could not determine GitHub repository."
-                    );
-
-                    return;
-
-                }
-
-
-                /* --------------------------------------
-                   ASK GITHUB FOR IMAGES
-                -------------------------------------- */
+                STEP 2: FETCH IMAGE LIST
+                */
 
                 const apiURL =
-                    `https://api.github.com/repos/${owner}/${repo}/contents/images`;
+                    `https://api.github.com/repos/` +
+                    `${owner}/${repo}/contents/images`;
 
-
-                const response =
-                    await fetch(apiURL);
-
+                const response = await fetch(apiURL);
 
                 if (!response.ok) {
-
                     throw new Error(
-                        "Could not access the images folder."
+                        `GitHub API returned ${response.status}. ` +
+                        "Check the repository name, images folder, " +
+                        "and GitHub API rate limit."
                     );
-
                 }
 
+                const files = await response.json();
 
-                const files =
-                    await response.json();
-
-
-                /* --------------------------------------
-                   FIND IMAGE FILES
-                -------------------------------------- */
-
-                let imageFiles =
-                    files.filter(
-                        file => {
-
-
-                            const name =
-                                file.name.toLowerCase();
-
-
-                            /*
-                             * Supported image formats
-                             */
-
-                            const isImage =
-
-                                name.endsWith(
-                                    ".jpg"
-                                )
-
-                                ||
-
-                                name.endsWith(
-                                    ".jpeg"
-                                )
-
-                                ||
-
-                                name.endsWith(
-                                    ".png"
-                                )
-
-                                ||
-
-                                name.endsWith(
-                                    ".webp"
-                                );
-
-
-                            /*
-                             * Don't use the Search-In
-                             * logo as a background.
-                             */
-
-                            const isLogo =
-
-                                name ===
-                                "logo.png"
-
-                                ||
-
-                                name ===
-                                "logo.jpg"
-
-                                ||
-
-                                name ===
-                                "logo.jpeg"
-
-                                ||
-
-                                name ===
-                                "logo.webp";
-
-
-                            return (
-                                isImage &&
-                                !isLogo
-                            );
-
-                        }
+                if (!Array.isArray(files)) {
+                    throw new Error(
+                        "The images path did not return a file list."
                     );
+                }
 
+                /*
+                STEP 3: FILTER PHOTOS
+                */
 
-                /* --------------------------------------
-                   RANDOMIZE PHOTO ORDER
-                --------------------------------------
+                const supportedExtensions = [
+                    ".jpg",
+                    ".jpeg",
+                    ".png",
+                    ".webp"
+                ];
 
-                   Fisher-Yates shuffle
-                -------------------------------------- */
+                let imageFiles = files.filter(file => {
+                    if (file.type !== "file") {
+                        return false;
+                    }
 
-                for (
-                    let i =
-                        imageFiles.length - 1;
+                    const name =
+                        file.name.toLowerCase();
 
-                    i > 0;
-
-                    i--
-                ) {
-
-
-                    const j =
-                        Math.floor(
-                            Math.random()
-                            * (i + 1)
+                    const isImage =
+                        supportedExtensions.some(
+                            ext => name.endsWith(ext)
                         );
 
+                    const isLogo =
+                        /^logo\.(jpg|jpeg|png|webp)$/i
+                            .test(file.name);
+
+                    return (
+                        isImage &&
+                        !isLogo &&
+                        typeof file.download_url === "string"
+                    );
+                });
+
+                if (imageFiles.length === 0) {
+                    throw new Error(
+                        "No supported photos found in images/."
+                    );
+                }
+
+                /*
+                STEP 4: RANDOMIZE PHOTO ORDER
+                */
+
+                for (
+                    let i = imageFiles.length - 1;
+                    i > 0;
+                    i--
+                ) {
+                    const j = Math.floor(
+                        Math.random() * (i + 1)
+                    );
 
                     [
                         imageFiles[i],
@@ -565,220 +326,253 @@
                         imageFiles[j],
                         imageFiles[i]
                     ];
-
                 }
 
+                /*
+                STEP 5: PRELOAD AND VERIFY PHOTOS
 
-                /* --------------------------------------
-                   CREATE SLIDES
-                -------------------------------------- */
+                A photo is only shown after the browser
+                confirms that it has loaded and decoded.
 
-                imageFiles.forEach(
-                    file => {
+                If a photo fails, it is skipped.
+                */
 
+                function preloadImage(url) {
+                    return new Promise(resolve => {
+                        const img = new Image();
+                        let finished = false;
 
-                        const slide =
-                            document.createElement(
-                                "div"
+                        function finish(success) {
+                            if (finished) return;
+                            finished = true;
+
+                            img.onload = null;
+                            img.onerror = null;
+
+                            resolve(success ? img : null);
+                        }
+
+                        img.onload = async () => {
+                            try {
+                                if (img.decode) {
+                                    await img.decode();
+                                }
+
+                                finish(
+                                    img.naturalWidth > 0 &&
+                                    img.naturalHeight > 0
+                                );
+                            } catch {
+                                // Some browsers can reject decode()
+                                // even when the image is displayable.
+                                finish(
+                                    img.naturalWidth > 0 &&
+                                    img.naturalHeight > 0
+                                );
+                            }
+                        };
+
+                        img.onerror = () => finish(false);
+
+                        img.src = url;
+
+                        // Handle images already available in cache.
+                        if (img.complete && img.naturalWidth > 0) {
+                            if (img.decode) {
+                                img.decode()
+                                    .then(() => finish(true))
+                                    .catch(() => {
+                                        finish(
+                                            img.naturalWidth > 0
+                                        );
+                                    });
+                            } else {
+                                finish(true);
+                            }
+                        }
+                    });
+                }
+
+                /*
+                STEP 6: FIND THE FIRST WORKING PHOTO
+
+                Do not display an empty slide while loading.
+                */
+
+                let firstImage = null;
+                let currentIndex = -1;
+
+                for (
+                    let i = 0;
+                    i < imageFiles.length;
+                    i++
+                ) {
+                    const candidate =
+                        imageFiles[i].download_url;
+
+                    const loaded =
+                        await preloadImage(candidate);
+
+                    if (loaded) {
+                        firstImage = candidate;
+                        currentIndex = i;
+
+                        console.log(
+                            "First photo loaded:",
+                            imageFiles[i].name
+                        );
+
+                        break;
+                    }
+
+                    console.warn(
+                        "Skipping unreadable photo:",
+                        imageFiles[i].name
+                    );
+                }
+
+                if (!firstImage) {
+                    throw new Error(
+                        "None of the photos could be loaded. " +
+                        "Check their file formats and URLs."
+                    );
+                }
+
+                /*
+                STEP 7: SHOW FIRST PHOTO
+                */
+
+                let activeSlide = slideA;
+                let inactiveSlide = slideB;
+
+                activeSlide.style.backgroundImage =
+                    `url("${firstImage}")`;
+
+                activeSlide.classList.add("active");
+
+                /*
+                STEP 8: SAFE CROSSFADE
+
+                Keep the current photo visible until the
+                next one has loaded successfully.
+
+                Only one transition runs at a time.
+                */
+
+                const DISPLAY_TIME = 5000;
+                const FADE_TIME = 2000;
+
+                const wait = ms =>
+                    new Promise(resolve =>
+                        setTimeout(resolve, ms)
+                    );
+
+                async function nextPhoto() {
+                    /*
+                    Try each remaining photo in shuffled order.
+                    A failed image never replaces the current one.
+                    */
+
+                    for (
+                        let attempts = 0;
+                        attempts < imageFiles.length;
+                        attempts++
+                    ) {
+                        currentIndex =
+                            (currentIndex + 1) %
+                            imageFiles.length;
+
+                        const file =
+                            imageFiles[currentIndex];
+
+                        const loaded =
+                            await preloadImage(
+                                file.download_url
                             );
 
+                        if (!loaded) {
+                            console.warn(
+                                "Photo failed to load; skipping:",
+                                file.name
+                            );
 
-                        slide.className =
-                            "slide";
-
+                            continue;
+                        }
 
                         /*
-                         * Use the actual GitHub
-                         * image URL.
-                         */
+                        Prepare the hidden layer first.
+                        */
 
-                        slide.style.backgroundImage =
+                        inactiveSlide.style.backgroundImage =
                             `url("${file.download_url}")`;
 
+                        /*
+                        Force the browser to register the
+                        hidden state before enabling the fade.
+                        */
 
-                        slideshow.appendChild(
-                            slide
+                        void inactiveSlide.offsetWidth;
+
+                        inactiveSlide.classList.add("active");
+
+                        /*
+                        Wait for the crossfade to finish
+                        before reusing the previous layer.
+                        */
+
+                        await wait(FADE_TIME + 100);
+
+                        activeSlide.classList.remove("active");
+
+                        /*
+                        Swap layer references.
+                        The newly visible image is now active.
+                        */
+
+                        const previousSlide = activeSlide;
+
+                        activeSlide = inactiveSlide;
+                        inactiveSlide = previousSlide;
+
+                        console.log(
+                            "Now displaying:",
+                            file.name
                         );
 
+                        return true;
                     }
-                );
-
-
-                /* --------------------------------------
-                   GET ALL CREATED SLIDES
-                -------------------------------------- */
-
-                const slides =
-                    document.querySelectorAll(
-                        ".slide"
-                    );
-
-
-                /* --------------------------------------
-                   CHECK IF PHOTOS EXIST
-                -------------------------------------- */
-
-                if (
-                    slides.length === 0
-                ) {
 
                     console.error(
-                        "No photos found in images folder."
+                        "No additional readable photos found. " +
+                        "Keeping the last visible photo."
                     );
 
-                    return;
-
+                    return false;
                 }
 
+                /*
+                STEP 9: RUN SLIDESHOW
 
-                /* --------------------------------------
-                   FIRST PHOTO
-                -------------------------------------- */
+                A sequential loop prevents overlapping timers
+                and competing transitions.
+                */
 
-                let currentSlide = 0;
+                while (true) {
+                    await wait(DISPLAY_TIME);
 
+                    await nextPhoto();
+                }
 
-                slides[
-                    currentSlide
-                ].classList.add(
-                    "active"
-                );
-
-
-                /* --------------------------------------
-                   SLIDESHOW
-                --------------------------------------
-
-                   Every 5 seconds:
-
-                   New photo becomes active FIRST.
-
-                   This means the old and new photos
-                   overlap during the 2-second CSS
-                   transition.
-
-                   Therefore there is NO black flash.
-                -------------------------------------- */
-
-                setInterval(
-                    () => {
-
-
-                        /*
-                         * Remember old photo
-                         */
-
-                        const oldSlide =
-                            slides[
-                                currentSlide
-                            ];
-
-
-                        /*
-                         * Determine next photo
-                         */
-
-                        const nextSlide =
-                            (
-                                currentSlide + 1
-                            )
-                            %
-                            slides.length;
-
-
-                        const newSlide =
-                            slides[
-                                nextSlide
-                            ];
-
-
-                        /*
-                         * IMPORTANT:
-                         *
-                         * Activate the new photo
-                         * BEFORE removing the old one.
-                         *
-                         * This creates the crossfade.
-                         */
-
-                        newSlide.classList.add(
-                            "active"
-                        );
-
-
-                        /*
-                         * Wait for the 2-second
-                         * crossfade to finish.
-                         *
-                         * Then hide the old photo.
-                         */
-
-                        setTimeout(
-                            () => {
-
-                                oldSlide.classList.remove(
-                                    "active"
-                                );
-
-                            },
-
-                            2000
-                        );
-
-
-                        /*
-                         * Update current slide
-                         */
-
-                        currentSlide =
-                            nextSlide;
-
-
-                    },
-
-                    /*
-                     * Change every 5 seconds.
-                     */
-
-                    5000
-                );
-
-
-                /* --------------------------------------
-                   CONSOLE MESSAGE
-                -------------------------------------- */
-
-                console.log(
-                    `Loaded ${slides.length} photos.`
-                );
-
-
-            }
-
-
-            catch (error) {
-
-
+            } catch (error) {
                 console.error(
-                    "Could not load slideshow photos:",
+                    "Slideshow initialization failed:",
                     error
                 );
-
-
             }
-
         }
 
-
-        /* =========================================
-           START SLIDESHOW
-        ========================================= */
-
         loadPhotos();
-
-
     </script>
-
 
 </body>
 </html>
