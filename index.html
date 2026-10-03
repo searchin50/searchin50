@@ -1,121 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>SEARCH-IN</title>
+<title>SEARCH-IN</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@300;
-      padding:0;
-      box-sizing:border-box;
-    }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com">
 
-    body{
-      overflow:hidden;
-      font-family:'Source Sans 3', sans-serif;
-    }
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .slideshow{
-      position:fixed;
-      top:0;
-      left:0;
-      width:100%;
-      height:100vh;
-      z-index:-2;
-    }
+body{
+    font-family:'Source Sans 3', sans-serif;
+    overflow:hidden;
+}
 
-    .slide{
-      position:absolute;
-      width:100%;
-      height:100%;
-      background-size:cover;
-      background-position:center;
-      opacity:0;
-      animation:fade 20s infinite;
-    }
+.slideshow{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
+}
 
-    .slide:nth-child(1){
-      background-image:url("images/photo1.jpg");
-      animation-delay:0s;
-    }
+.slide{
+    position:absolute;
+    width:100%;
+    height:100%;
+    background-size:cover;
+    background-position:center;
+    opacity:0;
+    animation:fade 20s infinite;
+}
 
-    .slide:nth-child(2){
-      background-image:url("images/photo2.jpg");
-      animation-delay:5s;
-    }
+.slide:nth-child(1){
+    background-image:url('images/photo1.jpg');
+    animation-delay:0s;
+}
 
-    .slide:nth-child(3){
-      background-image:url("images/photo3.jpg");
-      animation-delay:10s;
-    }
+.slide:nth-child(2){
+    background-image:url('images/photo2.jpg');
+    animation-delay:5s;
+}
 
-    .slide:nth-child(4){
-      background-image:url("images/photo4.jpg");
-      animation-delay:15s;
-    }
+.slide:nth-child(3){
+    background-image:url('images/photo3.jpg');
+    animation-delay:10s;
+}
 
-    @keyframes fade{
-      0%,100% { opacity:0; }
-      5%,25% { opacity:1; }
-      30% { opacity:0; }
-    }
+.slide:nth-child(4){
+    background-image:url('images/photo4.jpg');
+    animation-delay:15s;
+}
 
-    .overlay{
-      position:absolute;
-      top:0;
-      left:0;
-      width:100%;
-      height:100vh;
-      background:rgba(0,0,0,0.25);
-      display:flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
-      text-align:center;
-    }
+@keyframes fade{
+    0%,100% { opacity:0; }
+    5%,25% { opacity:1; }
+    30% { opacity:0; }
+}
 
-    .logo{
-      width:220px;
-      max-width:70vw;
-      margin-bottom:20px;
-    }
+.overlay{
+    position:absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100vh;
 
-    .title{
-      color:white;
-      font-size:4rem;
-      font-weight:700;
-      letter-spacing:8px;
-      text-shadow:0 0 20px rgba(0,0,0,0.6);
-    }
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 
-    @media (max-width:768px){
-      .title{
-        font-size:2.5rem;
-      }
+    background:rgba(0,0,0,0.25);
+}
 
-      .logo{
-        width:160px;
-      }
-    }
-  </style>
+.logo{
+    width:250px;
+    margin-bottom:20px;
+}
+
+.title{
+    color:white;
+    font-size:4rem;
+    font-weight:700;
+    letter-spacing:8px;
+}
+</style>
 </head>
 
 <body>
 
-  <div class="slideshow">
+<div class="slideshow">
     <div class="slide"></div>
     <div class="slide"></div>
     <div class="slide"></div>
     <div class="slide"></div>
-  </div>
+</div>
 
-  <div class="overlay">
+<div class="overlay">
     images/logo.png
     <div class="title">SEARCH-IN</div>
-  </div>
+</div>
 
 </body>
 </html>
