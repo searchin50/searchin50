@@ -1,492 +1,557 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search-In: The Road to 50</title> 
 
-    <title>Search-In: The Road to 50</title>
+    <!-- Source Sans Pro Regular --> 
+    <link rel="preconnect" href="https://fonts.googleapis.com"> 
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link 
+        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;600&display=swap" 
+        rel="stylesheet" 
+    > 
 
-    <!-- Source Sans Pro Regular -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@600&display=swap"
-        rel="stylesheet"
-    >
+    <style> 
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+        } 
 
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        body { 
+            font-family: "Source Sans Pro", sans-serif; 
+            overflow: hidden; 
+            background: #000; 
+        } 
 
-        body {
-            font-family: "Source Sans Pro", sans-serif;
-            overflow: hidden;
-            background: #000;
-        }
+        /* SLIDESHOW */ 
 
-        /* SLIDESHOW */
+        .slideshow { 
+            position: fixed; 
+            inset: 0; 
+            width: 100%; 
+            height: 100vh; 
+            background: #000; 
+        } 
 
-        .slideshow {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100vh;
-            background: #000;
-        }
+        .slide { 
+            position: absolute; 
+            inset: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat; 
+            opacity: 0; 
+            transition: opacity 2s ease-in-out; 
+        } 
 
-        .slide {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            opacity: 0;
-            transition: opacity 2s ease-in-out;
-        }
+        .slide.active { 
+            opacity: 1; 
+        } 
 
-        .slide.active {
-            opacity: 1;
-        }
+        /* DARK OVERLAY */ 
 
-        /* DARK OVERLAY */
+        .overlay { 
+            position: fixed; 
+            inset: 0; 
+            width: 100%; 
+            height: 100vh; 
+            padding: 24px; 
+            background: rgba(0, 0, 0, 0.35); 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            text-align: center; 
+        } 
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            width: 100%;
-            height: 100vh;
-            padding: 24px;
-            background: rgba(0, 0, 0, 0.35);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-        }
+        /* SEARCH-IN LOGO */ 
 
-        /* SEARCH-IN LOGO */
+        .logo { 
+            width: 100px; 
+            max-width: 80%; 
+            margin-bottom: 20px; 
+            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6)); 
+        } 
 
-        .logo {
-            width: 100px;
-            max-width: 80%;
-            margin-bottom: 20px;
-            filter: drop-shadow(0 4px 15px rgba(0, 0, 0, 0.6));
-        }
+        /* MAIN TITLE */ 
 
-        /* MAIN TITLE */
+        .title { 
+            color: white; 
+            font-size: 4rem; 
+            font-weight: 600; 
+            letter-spacing: 8px; 
+            text-shadow: 0 4px 5px rgba(0, 0, 0, 0.6); 
+        } 
 
-        .title {
-            color: white;
-            font-size: 4rem;
-            font-weight: 600;
-            letter-spacing: 8px;
-            text-shadow: 0 4px 5px rgba(0, 0, 0, 0.6);
-        }
+        /* MINIMALIST COUNTDOWN */ 
 
-        /* YEAR */
+        .countdown { 
+            display: flex; 
+            gap: 24px; 
+            margin-top: 16px; 
+            color: white; 
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); 
+        } 
 
-        .year {
-            color: white;
-            font-size: 2rem;
-            font-weight: 400;
-            letter-spacing: 5px;
-            margin-top: 12px;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
-        }
+        .countdown-item { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+        } 
 
-        /* SOCIAL MEDIA BUTTONS */
+        .countdown-number { 
+            font-size: 2rem; 
+            font-weight: 600; 
+            letter-spacing: 2px; 
+            line-height: 1; 
+        } 
 
-        .social-links {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 16px;
-            margin-top: 100px;
-        }
+        .countdown-label { 
+            font-size: 0.75rem; 
+            font-weight: 400; 
+            text-transform: uppercase; 
+            letter-spacing: 2px; 
+            opacity: 0.8; 
+            margin-top: 6px; 
+        } 
 
-        .social-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 44px;
-            height: 44px;
-            color: white;
-            background: rgba(255, 255, 255, 0.08);
-            border: 0px solid rgba(255, 255, 255, 0.75);
-            border-radius: 50%;
-            text-decoration: none;
-            transition:
-                background 0.25s ease,
-                color 0.25s ease,
-                transform 0.25s ease,
-                border-color 0.25s ease;
-        }
+        /* SOCIAL MEDIA BUTTONS */ 
 
-        .social-button svg {
-            width: 21px;
-            height: 21px;
-            fill: currentColor;
-        }
+        .social-links { 
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            gap: 16px; 
+            margin-top: 80px; 
+        } 
 
-        .social-button:hover,
-        .social-button:focus-visible {
-            color: #111;
-            background: white;
-            border-color: white;
-            transform: translateY(-3px);
-            outline: none;
-        }
+        .social-button { 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            width: 44px; 
+            height: 44px; 
+            color: white; 
+            background: rgba(255, 255, 255, 0.08); 
+            border: 0px solid rgba(255, 255, 255, 0.75); 
+            border-radius: 50%; 
+            text-decoration: none; 
+            transition: 
+                background 0.25s ease, 
+                color 0.25s ease, 
+                transform 0.25s ease, 
+                border-color 0.25s ease; 
+        } 
 
-        .social-button:focus-visible {
-            outline: 2px solid white;
-            outline-offset: 4px;
-        }
+        .social-button svg { 
+            width: 21px; 
+            height: 21px; 
+            fill: currentColor; 
+        } 
 
-        /* MOBILE */
+        .social-button:hover, 
+        .social-button:focus-visible { 
+            color: #111; 
+            background: white; 
+            border-color: white; 
+            transform: translateY(-3px); 
+            outline: none; 
+        } 
 
-        @media (max-width: 768px) {
-            .overlay {
-                padding: 20px;
+        .social-button:focus-visible { 
+            outline: 2px solid white; 
+            outline-offset: 4px; 
+        } 
+
+        /* MOBILE */ 
+
+        @media (max-width: 768px) { 
+            .overlay { 
+                padding: 20px; 
+            } 
+
+            .logo { 
+                width: 80px; 
+                margin-bottom: 18px; 
+            } 
+
+            .title { 
+                font-size: clamp(1.8rem, 7vw, 2.5rem); 
+                letter-spacing: 4px; 
+            } 
+
+            .countdown { 
+                gap: 14px; 
+                margin-top: 14px; 
+            } 
+
+            .countdown-number { 
+                font-size: 1.3rem; 
+            } 
+
+            .countdown-label { 
+                font-size: 0.65rem; 
+                letter-spacing: 1px; 
+            } 
+
+            .social-links { 
+                gap: 13px; 
+                margin-top: 36px; 
+            } 
+
+            .social-button { 
+                width: 42px; 
+                height: 42px; 
+            } 
+
+            .social-button svg { 
+                width: 20px; 
+                height: 20px; 
+            } 
+        } 
+
+        @media (prefers-reduced-motion: reduce) { 
+            .slide, 
+            .social-button { 
+                transition: none; 
+            } 
+        } 
+    </style> 
+</head> 
+
+<body> 
+
+    <!-- PHOTO SLIDESHOW --> 
+    <div class="slideshow" id="slideshow"> 
+        <div class="slide" id="slideA"></div> 
+        <div class="slide" id="slideB"></div> 
+    </div> 
+
+    <!-- CENTER CONTENT --> 
+    <main class="overlay"> 
+
+        <img 
+            class="logo" 
+            src="logo.png" 
+            alt="Search-In Logo" 
+        > 
+
+        <div class="title">THE ROAD TO 50</div> 
+
+        <!-- MINIMALIST COUNTDOWN TO JAN 1, 2028 --> 
+        <div class="countdown" id="countdown"> 
+            <div class="countdown-item"> 
+                <span class="countdown-number" id="days">00</span> 
+                <span class="countdown-label">Days</span> 
+            </div> 
+            <div class="countdown-item"> 
+                <span class="countdown-number" id="hours">00</span> 
+                <span class="countdown-label">Hours</span> 
+            </div> 
+            <div class="countdown-item"> 
+                <span class="countdown-number" id="minutes">00</span> 
+                <span class="countdown-label">Mins</span> 
+            </div> 
+            <div class="countdown-item"> 
+                <span class="countdown-number" id="seconds">00</span> 
+                <span class="countdown-label">Secs</span> 
+            </div> 
+        </div> 
+
+        <!-- SOCIAL MEDIA LINKS --> 
+        <nav class="social-links" aria-label="Search-In social media"> 
+
+            <!-- FACEBOOK --> 
+            <a 
+                class="social-button" 
+                href="https://www.facebook.com/LSGHSearchIn" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit Search-In on Facebook" 
+                title="Facebook" 
+            > 
+                <svg viewBox="0 0 24 24" aria-hidden="true"> 
+                    <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.2v3.2H10V21h3.4z"/> 
+                </svg> 
+            </a> 
+
+            <!-- INSTAGRAM --> 
+            <a 
+                class="social-button" 
+                href="https://www.instagram.com/searchinlsgh" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit Search-In on Instagram" 
+                title="Instagram" 
+            > 
+                <svg viewBox="0 0 24 24" aria-hidden="true"> 
+                    <rect 
+                        x="3" 
+                        y="3" 
+                        width="18" 
+                        height="18" 
+                        rx="5" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                    /> 
+                    <circle 
+                        cx="12" 
+                        cy="12" 
+                        r="4" 
+                        fill="none" 
+                        stroke="currentColor" 
+                        stroke-width="2" 
+                    /> 
+                    <circle cx="17.5" cy="6.8" r="1.2"/> 
+                </svg> 
+            </a> 
+
+            <!-- X --> 
+            <a 
+                class="social-button" 
+                href="https://x.com/searchinlsgh" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Visit Search-In on X" 
+                title="X" 
+            > 
+                <svg viewBox="0 0 24 24" aria-hidden="true"> 
+                    <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 13.9 4.9 22H1.8l7.3-8.4L1.3 2h6.4l4.5 7.5L18.9 2zm-1.1 18h1.7L6.8 3.9H5L17.8 20z"/> 
+                </svg> 
+            </a> 
+
+            <!-- SPOTIFY --> 
+            <a 
+                class="social-button" 
+                href="https://open.spotify.com/playlist/7uftqd0JLpVEjTf4bv41o9?si=83c557d81d8141dc" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                aria-label="Listen to the Search-In playlist on Spotify" 
+                title="Spotify" 
+            > 
+                <svg viewBox="0 0 24 24" aria-hidden="true"> 
+                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.5a.8.8 0 0 1-1.1.3c-2.8-1.7-6.3-2.1-10.4-1.1a.8.8 0 1 1-.4-1.5c4.5-1 8.4-.6 11.6 1.3.4.2.5.7.3 1zm1.5-3.2a1 1 0 0 1-1.3.3c-3.2-2-8-2.6-11.7-1.4a1 1 0 1 1-.6-1.8c4.3-1.3 9.6-.7 13.3 1.6.5.3.6.9.3 1.3zm.1-3.3c-3.8-2.3-10-2.5-13.6-1.4a1.1 1.1 0 0 1-.7-2.1c4.2-1.3 11-1.1 15.4 1.6a1.1 1.1 0 0 1-1.1 1.9z"/> 
+                </svg> 
+            </a> 
+
+        </nav> 
+    </main> 
+
+    <script> 
+        /* COUNTDOWN SCRIPT */
+        // Change target date here if needed (Format: YYYY-MM-DD or full ISO string)
+        const targetDate = new Date("2028-01-01T00:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "<span class=\"countdown-number\">WELCOME TO 2028</span>";
+                return;
             }
 
-            .logo {
-                width: 80px;
-                margin-bottom: 18px;
-            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            .title {
-                font-size: clamp(2.5rem, 7vw, 2.5rem);
-                letter-spacing: 4px;
-            }
-
-            .year {
-                font-size: 1rem;
-                letter-spacing: 4px;
-            }
-
-            .social-links {
-                gap: 13px;
-                margin-top: 24px;
-            }
-
-            .social-button {
-                width: 42px;
-                height: 42px;
-            }
-
-            .social-button svg {
-                width: 20px;
-                height: 20px;
-            }
+            document.getElementById("days").textContent = String(days).padStart(2, "0");
+            document.getElementById("hours").textContent = String(hours).padStart(2, "0");
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, "0");
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, "0");
         }
 
-        @media (prefers-reduced-motion: reduce) {
-            .slide,
-            .social-button {
-                transition: none;
-            }
-        }
-    </style>
-</head>
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
 
-<body>
+        /* SLIDESHOW SCRIPT */
+        async function loadPhotos() { 
+            const slideshow = document.getElementById("slideshow"); 
+            const slideA = document.getElementById("slideA"); 
+            const slideB = document.getElementById("slideB"); 
 
-    <!-- PHOTO SLIDESHOW -->
-    <div class="slideshow" id="slideshow">
-        <div class="slide" id="slideA"></div>
-        <div class="slide" id="slideB"></div>
-    </div>
+            try { 
+                const hostname = window.location.hostname; 
+                const pathname = window.location.pathname; 
 
-    <!-- CENTER CONTENT -->
-    <main class="overlay">
+                let owner; 
+                let repo; 
 
-        <img
-            class="logo"
-            src="logo.png"
-            alt="Search-In Logo"
-        >
+                if (hostname.endsWith(".github.io")) { 
+                    owner = hostname.replace(".github.io", ""); 
 
-        <div class="title">THE ROAD TO 50</div>
+                    const pathParts = pathname 
+                        .split("/") 
+                        .filter(Boolean); 
 
-        <div class="year">2028</div>
+                    repo = pathParts[0] || `${owner}.github.io`; 
+                } 
 
-        <!-- SOCIAL MEDIA LINKS -->
-        <nav class="social-links" aria-label="Search-In social media">
+                if (!owner || !repo) { 
+                    throw new Error( 
+                        "Could not determine the GitHub repository from this URL." 
+                    ); 
+                } 
 
-            <!-- FACEBOOK -->
-            <a
-                class="social-button"
-                href="https://www.facebook.com/LSGHSearchIn"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Search-In on Facebook"
-                title="Facebook"
-            >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M13.4 21v-8.2h2.8l.4-3.2h-3.2v-2c0-.9.3-1.6 1.6-1.6h1.7V3.1c-.3 0-1.3-.1-2.5-.1-2.5 0-4.2 1.5-4.2 4.3v2.4H7.2v3.2H10V21h3.4z"/>
-                </svg>
-            </a>
+                const apiURL = 
+                    `https://api.github.com/repos/${owner}/${repo}/contents/images`; 
 
-            <!-- INSTAGRAM -->
-            <a
-                class="social-button"
-                href="https://www.instagram.com/searchinlsgh"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Search-In on Instagram"
-                title="Instagram"
-            >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <rect
-                        x="3"
-                        y="3"
-                        width="18"
-                        height="18"
-                        rx="5"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    />
-                    <circle
-                        cx="12"
-                        cy="12"
-                        r="4"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                    />
-                    <circle cx="17.5" cy="6.8" r="1.2"/>
-                </svg>
-            </a>
+                const response = await fetch(apiURL); 
 
-            <!-- X -->
-            <a
-                class="social-button"
-                href="https://x.com/searchinlsgh"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Visit Search-In on X"
-                title="X"
-            >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 13.9 4.9 22H1.8l7.3-8.4L1.3 2h6.4l4.5 7.5L18.9 2zm-1.1 18h1.7L6.8 3.9H5L17.8 20z"/>
-                </svg>
-            </a>
+                if (!response.ok) { 
+                    throw new Error("Could not access the images folder."); 
+                } 
 
-            <!-- SPOTIFY -->
-            <a
-                class="social-button"
-                href="https://open.spotify.com/playlist/7uftqd0JLpVEjTf4bv41o9?si=83c557d81d8141dc"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Listen to the Search-In playlist on Spotify"
-                title="Spotify"
-            >
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                    <path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zm4.6 14.5a.8.8 0 0 1-1.1.3c-2.8-1.7-6.3-2.1-10.4-1.1a.8.8 0 1 1-.4-1.5c4.5-1 8.4-.6 11.6 1.3.4.2.5.7.3 1zm1.5-3.2a1 1 0 0 1-1.3.3c-3.2-2-8-2.6-11.7-1.4a1 1 0 1 1-.6-1.8c4.3-1.3 9.6-.7 13.3 1.6.5.3.6.9.3 1.3zm.1-3.3c-3.8-2.3-10-2.5-13.6-1.4a1.1 1.1 0 0 1-.7-2.1c4.2-1.3 11-1.1 15.4 1.6a1.1 1.1 0 0 1-1.1 1.9z"/>
-                </svg>
-            </a>
+                const files = await response.json(); 
 
-        </nav>
-    </main>
+                let imageFiles = files.filter(file => { 
+                    const name = file.name.toLowerCase(); 
 
-    <script>
-        async function loadPhotos() {
-            const slideshow = document.getElementById("slideshow");
-            const slideA = document.getElementById("slideA");
-            const slideB = document.getElementById("slideB");
+                    const isImage = 
+                        /\.(jpg|jpeg|png|webp)$/i.test(name); 
 
-            try {
-                const hostname = window.location.hostname;
-                const pathname = window.location.pathname;
+                    const isLogo = 
+                        /^logo\.(jpg|jpeg|png|webp)$/i.test(name); 
 
-                let owner;
-                let repo;
+                    return file.type === "file" && 
+                        isImage && 
+                        !isLogo && 
+                        file.download_url; 
+                }); 
 
-                if (hostname.endsWith(".github.io")) {
-                    owner = hostname.replace(".github.io", "");
+                // Randomize the order of the photos. 
+                for (let i = imageFiles.length - 1; i > 0; i--) { 
+                    const j = Math.floor(Math.random() * (i + 1)); 
+                    [imageFiles[i], imageFiles[j]] = 
+                        [imageFiles[j], imageFiles[i]]; 
+                } 
 
-                    const pathParts = pathname
-                        .split("/")
-                        .filter(Boolean);
+                if (imageFiles.length === 0) { 
+                    throw new Error("No photos found in the images folder."); 
+                } 
 
-                    // Project Pages sites have a repository in the URL.
-                    // For a username.github.io site, use that repository name.
-                    repo = pathParts[0] || `${owner}.github.io`;
-                }
+                function preloadImage(url) { 
+                    return new Promise(resolve => { 
+                        const image = new Image(); 
+                        let finished = false; 
 
-                if (!owner || !repo) {
-                    throw new Error(
-                        "Could not determine the GitHub repository from this URL."
-                    );
-                }
+                        function finish(success) { 
+                            if (finished) return; 
+                            finished = true; 
+                            resolve(success ? url : null); 
+                        } 
 
-                const apiURL =
-                    `https://api.github.com/repos/${owner}/${repo}/contents/images`;
+                        image.onload = async () => { 
+                            try { 
+                                if (image.decode) { 
+                                    await image.decode(); 
+                                } 
 
-                const response = await fetch(apiURL);
+                                finish(image.naturalWidth > 0); 
+                            } catch { 
+                                finish(image.naturalWidth > 0); 
+                            } 
+                        }; 
 
-                if (!response.ok) {
-                    throw new Error("Could not access the images folder.");
-                }
+                        image.onerror = () => finish(false); 
+                        image.src = url; 
 
-                const files = await response.json();
+                        if (image.complete && image.naturalWidth > 0) { 
+                            finish(true); 
+                        } 
+                    }); 
+                } 
 
-                let imageFiles = files.filter(file => {
-                    const name = file.name.toLowerCase();
+                function wait(ms) { 
+                    return new Promise(resolve => setTimeout(resolve, ms)); 
+                } 
 
-                    const isImage =
-                        /\.(jpg|jpeg|png|webp)$/i.test(name);
+                let currentIndex = -1; 
+                let firstURL = null; 
 
-                    const isLogo =
-                        /^logo\.(jpg|jpeg|png|webp)$/i.test(name);
+                for (let i = 0; i < imageFiles.length; i++) { 
+                    const url = await preloadImage(imageFiles[i].download_url); 
 
-                    return file.type === "file" &&
-                        isImage &&
-                        !isLogo &&
-                        file.download_url;
-                });
+                    if (url) { 
+                        currentIndex = i; 
+                        firstURL = url; 
+                        break; 
+                    } 
+                } 
 
-                // Randomize the order of the photos.
-                for (let i = imageFiles.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [imageFiles[i], imageFiles[j]] =
-                        [imageFiles[j], imageFiles[i]];
-                }
+                if (!firstURL) { 
+                    throw new Error("None of the slideshow photos could be loaded."); 
+                } 
 
-                if (imageFiles.length === 0) {
-                    throw new Error("No photos found in the images folder.");
-                }
+                let currentLayer = slideA; 
+                let nextLayer = slideB; 
 
-                // Preload a photo and verify that it can be displayed.
-                function preloadImage(url) {
-                    return new Promise(resolve => {
-                        const image = new Image();
-                        let finished = false;
+                currentLayer.style.backgroundImage = 
+                    `url("${firstURL}")`; 
 
-                        function finish(success) {
-                            if (finished) return;
-                            finished = true;
-                            resolve(success ? url : null);
-                        }
+                currentLayer.classList.add("active"); 
 
-                        image.onload = async () => {
-                            try {
-                                if (image.decode) {
-                                    await image.decode();
-                                }
+                async function showNextPhoto() { 
+                    await wait(3000); 
 
-                                finish(image.naturalWidth > 0);
-                            } catch {
-                                finish(image.naturalWidth > 0);
-                            }
-                        };
+                    let nextURL = null; 
+                    let attempts = 0; 
 
-                        image.onerror = () => finish(false);
-                        image.src = url;
+                    while (attempts < imageFiles.length) { 
+                        currentIndex = (currentIndex + 1) % imageFiles.length; 
+                        attempts++; 
 
-                        // Handle cached images that may already be ready.
-                        if (image.complete && image.naturalWidth > 0) {
-                            finish(true);
-                        }
-                    });
-                }
+                        nextURL = await preloadImage( 
+                            imageFiles[currentIndex].download_url 
+                        ); 
 
-                function wait(ms) {
-                    return new Promise(resolve => setTimeout(resolve, ms));
-                }
+                        if (nextURL) break; 
+                    } 
 
-                // Find the first photo that loads successfully.
-                let currentIndex = -1;
-                let firstURL = null;
+                    if (!nextURL) { 
+                        showNextPhoto(); 
+                        return; 
+                    } 
 
-                for (let i = 0; i < imageFiles.length; i++) {
-                    const url = await preloadImage(imageFiles[i].download_url);
+                    nextLayer.style.backgroundImage = 
+                        `url("${nextURL}")`; 
 
-                    if (url) {
-                        currentIndex = i;
-                        firstURL = url;
-                        break;
-                    }
-                }
+                    await new Promise(resolve => 
+                        requestAnimationFrame(() => 
+                            requestAnimationFrame(resolve) 
+                        ) 
+                    ); 
 
-                if (!firstURL) {
-                    throw new Error("None of the slideshow photos could be loaded.");
-                }
+                    nextLayer.classList.add("active"); 
+                    await wait(2000); 
 
-                let currentLayer = slideA;
-                let nextLayer = slideB;
+                    currentLayer.classList.remove("active"); 
 
-                currentLayer.style.backgroundImage =
-                    `url("${firstURL}")`;
+                    const oldLayer = currentLayer; 
+                    currentLayer = nextLayer; 
+                    nextLayer = oldLayer; 
 
-                currentLayer.classList.add("active");
+                    showNextPhoto(); 
+                } 
 
-                // Keep trying other photos if one fails to load.
-                async function showNextPhoto() {
-                    await wait(3000);
+                showNextPhoto(); 
 
-                    let nextURL = null;
-                    let attempts = 0;
+                console.log(`Loaded slideshow with ${imageFiles.length} photos.`); 
 
-                    while (attempts < imageFiles.length) {
-                        currentIndex = (currentIndex + 1) % imageFiles.length;
-                        attempts++;
+            } catch (error) { 
+                console.error("Could not load slideshow photos:", error); 
+            } 
+        } 
 
-                        nextURL = await preloadImage(
-                            imageFiles[currentIndex].download_url
-                        );
+        loadPhotos(); 
+    </script> 
 
-                        if (nextURL) break;
-                    }
-
-                    // If all photos fail, keep the current photo visible.
-                    if (!nextURL) {
-                        showNextPhoto();
-                        return;
-                    }
-
-                    // Load the next image on the hidden layer first.
-                    nextLayer.style.backgroundImage =
-                        `url("${nextURL}")`;
-
-                    // Allow the browser to register the new background.
-                    await new Promise(resolve =>
-                        requestAnimationFrame(() =>
-                            requestAnimationFrame(resolve)
-                        )
-                    );
-
-                    // Crossfade between the two layers.
-                    nextLayer.classList.add("active");
-                    await wait(2000);
-
-                    currentLayer.classList.remove("active");
-
-                    const oldLayer = currentLayer;
-                    currentLayer = nextLayer;
-                    nextLayer = oldLayer;
-
-                    showNextPhoto();
-                }
-
-                showNextPhoto();
-
-                console.log(`Loaded slideshow with ${imageFiles.length} photos.`);
-
-            } catch (error) {
-                console.error("Could not load slideshow photos:", error);
-            }
-        }
-
-        loadPhotos();
-    </script>
-
-</body>
+</body> 
 </html>
