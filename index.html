@@ -21,20 +21,25 @@
             box-sizing: border-box; 
         } 
 
-        body { 
-            font-family: "Source Sans Pro", sans-serif; 
+        html, body { 
+            width: 100%;
+            height: 100%;
             overflow: hidden; 
             background: #000; 
+            font-family: "Source Sans Pro", sans-serif; 
         } 
 
         /* SLIDESHOW */ 
 
         .slideshow { 
             position: fixed; 
-            inset: 0; 
-            width: 100%; 
+            top: 0;
+            left: 0;
+            width: 100vw; 
             height: 100vh; 
+            height: 100dvh; /* Handles mobile dynamic viewport height */
             background: #000; 
+            z-index: 1;
         } 
 
         .slide { 
@@ -43,10 +48,11 @@
             width: 100%; 
             height: 100%; 
             background-size: cover; 
-            background-position: center; 
+            background-position: center center; 
             background-repeat: no-repeat; 
             opacity: 0; 
             transition: opacity 2s ease-in-out; 
+            will-change: opacity;
         } 
 
         .slide.active { 
@@ -60,13 +66,15 @@
             inset: 0; 
             width: 100%; 
             height: 100vh; 
+            height: 100dvh;
             padding: 24px; 
-            background: rgba(0, 0, 0, 0.35); 
+            background: rgba(0, 0, 0, 0.45); 
             display: flex; 
             flex-direction: column; 
             justify-content: center; 
             align-items: center; 
             text-align: center; 
+            z-index: 2;
         } 
 
         /* SEARCH-IN LOGO */ 
@@ -81,11 +89,11 @@
         /* MAIN TITLE */ 
 
         .title { 
-            color: white; 
+            color: #ffffff; 
             font-size: 4rem; 
             font-weight: 600; 
             letter-spacing: 8px; 
-            text-shadow: 0 4px 5px rgba(0, 0, 0, 0.6); 
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); 
         } 
 
         /* MINIMALIST COUNTDOWN */ 
@@ -93,19 +101,20 @@
         .countdown { 
             display: flex; 
             gap: 24px; 
-            margin-top: 16px; 
-            color: white; 
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); 
+            margin-top: 20px; 
+            color: #ffffff; 
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7); 
         } 
 
         .countdown-item { 
             display: flex; 
             flex-direction: column; 
             align-items: center; 
+            min-width: 50px;
         } 
 
         .countdown-number { 
-            font-size: 2rem; 
+            font-size: 2.2rem; 
             font-weight: 600; 
             letter-spacing: 2px; 
             line-height: 1; 
@@ -116,7 +125,7 @@
             font-weight: 400; 
             text-transform: uppercase; 
             letter-spacing: 2px; 
-            opacity: 0.8; 
+            opacity: 0.85; 
             margin-top: 6px; 
         } 
 
@@ -127,7 +136,7 @@
             justify-content: center; 
             align-items: center; 
             gap: 16px; 
-            margin-top: 80px; 
+            margin-top: 70px; 
         } 
 
         .social-button { 
@@ -136,9 +145,9 @@
             justify-content: center; 
             width: 44px; 
             height: 44px; 
-            color: white; 
-            background: rgba(255, 255, 255, 0.08); 
-            border: 0px solid rgba(255, 255, 255, 0.75); 
+            color: #ffffff; 
+            background: rgba(255, 255, 255, 0.12); 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
             border-radius: 50%; 
             text-decoration: none; 
             transition: 
@@ -146,6 +155,8 @@
                 color 0.25s ease, 
                 transform 0.25s ease, 
                 border-color 0.25s ease; 
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
         } 
 
         .social-button svg { 
@@ -157,8 +168,8 @@
         .social-button:hover, 
         .social-button:focus-visible { 
             color: #111; 
-            background: white; 
-            border-color: white; 
+            background: #ffffff; 
+            border-color: #ffffff; 
             transform: translateY(-3px); 
             outline: none; 
         } 
@@ -168,40 +179,44 @@
             outline-offset: 4px; 
         } 
 
-        /* MOBILE */ 
+        /* MOBILE OPTIMIZATIONS */ 
 
         @media (max-width: 768px) { 
             .overlay { 
-                padding: 20px; 
+                padding: 16px; 
             } 
 
             .logo { 
-                width: 80px; 
-                margin-bottom: 18px; 
+                width: 75px; 
+                margin-bottom: 16px; 
             } 
 
             .title { 
-                font-size: clamp(1.8rem, 7vw, 2.5rem); 
-                letter-spacing: 4px; 
+                font-size: clamp(1.6rem, 6.5vw, 2.5rem); 
+                letter-spacing: 3px; 
             } 
 
             .countdown { 
-                gap: 14px; 
-                margin-top: 14px; 
+                gap: 12px; 
+                margin-top: 16px; 
             } 
 
+            .countdown-item {
+                min-width: 40px;
+            }
+
             .countdown-number { 
-                font-size: 1.3rem; 
+                font-size: 1.4rem; 
             } 
 
             .countdown-label { 
-                font-size: 0.65rem; 
+                font-size: 0.6rem; 
                 letter-spacing: 1px; 
             } 
 
             .social-links { 
-                gap: 13px; 
-                margin-top: 36px; 
+                gap: 14px; 
+                margin-top: 40px; 
             } 
 
             .social-button { 
@@ -239,12 +254,13 @@
             class="logo" 
             src="logo.png" 
             alt="Search-In Logo" 
+            onerror="this.style.display='none'"
         > 
 
         <div class="title">THE ROAD TO 50</div> 
 
-        <!-- MINIMALIST COUNTDOWN TO JAN 1, 2028 --> 
-        <div class="countdown" id="countdown"> 
+        <!-- MINIMALIST COUNTDOWN TO JULY 29, 2028 --> 
+        <div class="countdown" id="countdown" aria-live="polite"> 
             <div class="countdown-item"> 
                 <span class="countdown-number" id="days">00</span> 
                 <span class="countdown-label">Days</span> 
@@ -344,16 +360,16 @@
     </main> 
 
     <script> 
-        /* COUNTDOWN SCRIPT */
-        // Change target date here if needed (Format: YYYY-MM-DD or full ISO string)
-        const targetDate = new Date("2028-01-01T00:00:00").getTime();
+        /* COUNTDOWN LOGIC TARGETING JULY 29, 2028 */
+        const targetDate = new Date("2028-07-29T00:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
             const distance = targetDate - now;
 
             if (distance < 0) {
-                document.getElementById("countdown").innerHTML = "<span class=\"countdown-number\">WELCOME TO 2028</span>";
+                document.getElementById("countdown").innerHTML = 
+                    "<span class=\"countdown-number\">WELCOME TO THE 50TH</span>";
                 return;
             }
 
@@ -371,18 +387,25 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* SLIDESHOW SCRIPT */
+        /* SLIDESHOW LOGIC WITH MOBILE AND LOCAL EMBED FALLBACKS */
+        const fallbackImages = [
+            "https://picsum.photos/id/1015/1920/1080",
+            "https://picsum.photos/id/1018/1920/1080",
+            "https://picsum.photos/id/1025/1920/1080"
+        ];
+
         async function loadPhotos() { 
-            const slideshow = document.getElementById("slideshow"); 
             const slideA = document.getElementById("slideA"); 
             const slideB = document.getElementById("slideB"); 
+
+            let imageURLs = [];
 
             try { 
                 const hostname = window.location.hostname; 
                 const pathname = window.location.pathname; 
 
-                let owner; 
-                let repo; 
+                let owner = ""; 
+                let repo = ""; 
 
                 if (hostname.endsWith(".github.io")) { 
                     owner = hostname.replace(".github.io", ""); 
@@ -394,163 +417,138 @@
                     repo = pathParts[0] || `${owner}.github.io`; 
                 } 
 
-                if (!owner || !repo) { 
-                    throw new Error( 
-                        "Could not determine the GitHub repository from this URL." 
-                    ); 
-                } 
+                if (owner && repo) {
+                    const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/images`; 
+                    const response = await fetch(apiURL); 
 
-                const apiURL = 
-                    `https://api.github.com/repos/${owner}/${repo}/contents/images`; 
+                    if (response.ok) { 
+                        const files = await response.json(); 
 
-                const response = await fetch(apiURL); 
+                        let githubFiles = files.filter(file => { 
+                            const name = file.name.toLowerCase(); 
+                            const isImage = /\.(jpg|jpeg|png|webp)$/i.test(name); 
+                            const isLogo = /^logo\.(jpg|jpeg|png|webp)$/i.test(name); 
 
-                if (!response.ok) { 
-                    throw new Error("Could not access the images folder."); 
-                } 
+                            return file.type === "file" && isImage && !isLogo && file.download_url; 
+                        }); 
 
-                const files = await response.json(); 
+                        imageURLs = githubFiles.map(f => f.download_url);
+                    } 
+                }
+            } catch (error) { 
+                console.warn("Could not query GitHub API, falling back to local or default images:", error); 
+            } 
 
-                let imageFiles = files.filter(file => { 
-                    const name = file.name.toLowerCase(); 
+            // If GitHub API yields no photos (e.g. running outside GH Pages or rate-limited), fallback
+            if (imageURLs.length === 0) {
+                imageURLs = [...fallbackImages];
+            }
 
-                    const isImage = 
-                        /\.(jpg|jpeg|png|webp)$/i.test(name); 
+            // Shuffle photo order
+            for (let i = imageURLs.length - 1; i > 0; i--) { 
+                const j = Math.floor(Math.random() * (i + 1)); 
+                [imageURLs[i], imageURLs[j]] = [imageURLs[j], imageURLs[i]]; 
+            } 
 
-                    const isLogo = 
-                        /^logo\.(jpg|jpeg|png|webp)$/i.test(name); 
+            // Helper to preload image cleanly on both mobile safari & webview browsers
+            function preloadImage(url) { 
+                return new Promise(resolve => { 
+                    const image = new Image(); 
+                    let finished = false; 
 
-                    return file.type === "file" && 
-                        isImage && 
-                        !isLogo && 
-                        file.download_url; 
-                }); 
+                    function finish(success) { 
+                        if (finished) return; 
+                        finished = true; 
+                        resolve(success ? url : null); 
+                    } 
 
-                // Randomize the order of the photos. 
-                for (let i = imageFiles.length - 1; i > 0; i--) { 
-                    const j = Math.floor(Math.random() * (i + 1)); 
-                    [imageFiles[i], imageFiles[j]] = 
-                        [imageFiles[j], imageFiles[i]]; 
-                } 
-
-                if (imageFiles.length === 0) { 
-                    throw new Error("No photos found in the images folder."); 
-                } 
-
-                function preloadImage(url) { 
-                    return new Promise(resolve => { 
-                        const image = new Image(); 
-                        let finished = false; 
-
-                        function finish(success) { 
-                            if (finished) return; 
-                            finished = true; 
-                            resolve(success ? url : null); 
-                        } 
-
-                        image.onload = async () => { 
-                            try { 
-                                if (image.decode) { 
-                                    await image.decode(); 
-                                } 
-
-                                finish(image.naturalWidth > 0); 
-                            } catch { 
-                                finish(image.naturalWidth > 0); 
+                    image.onload = async () => { 
+                        try { 
+                            if (image.decode) { 
+                                await image.decode(); 
                             } 
-                        }; 
-
-                        image.onerror = () => finish(false); 
-                        image.src = url; 
-
-                        if (image.complete && image.naturalWidth > 0) { 
-                            finish(true); 
+                            finish(image.naturalWidth > 0); 
+                        } catch { 
+                            finish(image.naturalWidth > 0); 
                         } 
-                    }); 
-                } 
+                    }; 
 
-                function wait(ms) { 
-                    return new Promise(resolve => setTimeout(resolve, ms)); 
-                } 
+                    image.onerror = () => finish(false); 
+                    image.src = url; 
 
-                let currentIndex = -1; 
-                let firstURL = null; 
-
-                for (let i = 0; i < imageFiles.length; i++) { 
-                    const url = await preloadImage(imageFiles[i].download_url); 
-
-                    if (url) { 
-                        currentIndex = i; 
-                        firstURL = url; 
-                        break; 
+                    if (image.complete && image.naturalWidth > 0) { 
+                        finish(true); 
                     } 
+                }); 
+            } 
+
+            function wait(ms) { 
+                return new Promise(resolve => setTimeout(resolve, ms)); 
+            } 
+
+            let currentIndex = -1; 
+            let firstURL = null; 
+
+            for (let i = 0; i < imageURLs.length; i++) { 
+                const url = await preloadImage(imageURLs[i]); 
+                if (url) { 
+                    currentIndex = i; 
+                    firstURL = url; 
+                    break; 
+                } 
+            } 
+
+            if (!firstURL) return; 
+
+            let currentLayer = slideA; 
+            let nextLayer = slideB; 
+
+            currentLayer.style.backgroundImage = `url("${firstURL}")`; 
+            currentLayer.classList.add("active"); 
+
+            async function showNextPhoto() { 
+                await wait(4000); 
+
+                let nextURL = null; 
+                let attempts = 0; 
+
+                while (attempts < imageURLs.length) { 
+                    currentIndex = (currentIndex + 1) % imageURLs.length; 
+                    attempts++; 
+
+                    nextURL = await preloadImage(imageURLs[currentIndex]); 
+                    if (nextURL) break; 
                 } 
 
-                if (!firstURL) { 
-                    throw new Error("None of the slideshow photos could be loaded."); 
-                } 
-
-                let currentLayer = slideA; 
-                let nextLayer = slideB; 
-
-                currentLayer.style.backgroundImage = 
-                    `url("${firstURL}")`; 
-
-                currentLayer.classList.add("active"); 
-
-                async function showNextPhoto() { 
-                    await wait(3000); 
-
-                    let nextURL = null; 
-                    let attempts = 0; 
-
-                    while (attempts < imageFiles.length) { 
-                        currentIndex = (currentIndex + 1) % imageFiles.length; 
-                        attempts++; 
-
-                        nextURL = await preloadImage( 
-                            imageFiles[currentIndex].download_url 
-                        ); 
-
-                        if (nextURL) break; 
-                    } 
-
-                    if (!nextURL) { 
-                        showNextPhoto(); 
-                        return; 
-                    } 
-
-                    nextLayer.style.backgroundImage = 
-                        `url("${nextURL}")`; 
-
-                    await new Promise(resolve => 
-                        requestAnimationFrame(() => 
-                            requestAnimationFrame(resolve) 
-                        ) 
-                    ); 
-
-                    nextLayer.classList.add("active"); 
-                    await wait(2000); 
-
-                    currentLayer.classList.remove("active"); 
-
-                    const oldLayer = currentLayer; 
-                    currentLayer = nextLayer; 
-                    nextLayer = oldLayer; 
-
+                if (!nextURL) { 
                     showNextPhoto(); 
+                    return; 
                 } 
+
+                nextLayer.style.backgroundImage = `url("${nextURL}")`; 
+
+                await new Promise(resolve => 
+                    requestAnimationFrame(() => 
+                        requestAnimationFrame(resolve) 
+                    ) 
+                ); 
+
+                nextLayer.classList.add("active"); 
+                await wait(2000); 
+
+                currentLayer.classList.remove("active"); 
+
+                const oldLayer = currentLayer; 
+                currentLayer = nextLayer; 
+                nextLayer = oldLayer; 
 
                 showNextPhoto(); 
-
-                console.log(`Loaded slideshow with ${imageFiles.length} photos.`); 
-
-            } catch (error) { 
-                console.error("Could not load slideshow photos:", error); 
             } 
+
+            showNextPhoto(); 
         } 
 
-        loadPhotos(); 
+        window.addEventListener("DOMContentLoaded", loadPhotos);
     </script> 
 
 </body> 
