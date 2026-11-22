@@ -387,68 +387,58 @@
         setInterval(updateCountdown, 1000);
         updateCountdown();
 
-        /* SLIDESHOW LOGIC WITH MOBILE AND LOCAL EMBED FALLBACKS */
-        const fallbackImages = [
-            "https://picsum.photos/id/1015/1920/1080",
-            "https://picsum.photos/id/1018/1920/1080",
-            "https://picsum.photos/id/1025/1920/1080"
-        ];
+       
+/* SLIDESHOW LOGIC - SEARCH-IN PHOTOS ONLY */
 
-        async function loadPhotos() { 
-            const slideA = document.getElementById("slideA"); 
-            const slideB = document.getElementById("slideB"); 
+async function loadPhotos() {
 
-            let imageURLs = [];
+    const slideA = document.getElementById("slideA");
+    const slideB = document.getElementById("slideB");
 
-            try { 
-                const hostname = window.location.hostname; 
-                const pathname = window.location.pathname; 
+    let imageURLs = [];
 
-                let owner = ""; 
-                let repo = ""; 
+    try {
+        const apiURL =
+            "https://api.github.com/repos/searchin50/searchin50/contents/images?ref=main";
 
-                if (hostname.endsWith(".github.io")) { 
-                    owner = hostname.replace(".github.io", ""); 
+        const response = await fetch(apiURL);
 
-                    const pathParts = pathname 
-                        .split("/") 
-                        .filter(Boolean); 
+        if (!response.ok) {
+            throw new Error("GitHub image request failed");
+        }
 
-                    repo = pathParts[0] || `${owner}.github.io`; 
-                } 
+        const files = await response.json();
 
-                if (owner && repo) {
-                    const apiURL = `https://api.github.com/repos/${owner}/${repo}/contents/images`; 
-                    const response = await fetch(apiURL); 
+        imageURLs = files
+            .filter(file => {
+                const name = file.name.toLowerCase();
 
-                    if (response.ok) { 
-                        const files = await response.json(); 
+                return (
+                    file.type === "file" &&
+                    /\.(jpg|jpeg|png|webp)$/i.test(name) &&
+                    !/^logo\.(jpg|jpeg|png|webp)$/i.test(name) &&
+                    file.download_url
+                );
+            })
+            .map(file => file.download_url);
 
-                        let githubFiles = files.filter(file => { 
-                            const name = file.name.toLowerCase(); 
-                            const isImage = /\.(jpg|jpeg|png|webp)$/i.test(name); 
-                            const isLogo = /^logo\.(jpg|jpeg|png|webp)$/i.test(name); 
+    } catch (error) {
+        console.error("Unable to load Search-In photos:", error);
+        return;
+    }
 
-                            return file.type === "file" && isImage && !isLogo && file.download_url; 
-                        }); 
+    // Never use external stock photos
+    if (imageURLs.length === 0) {
+        console.warn("No Search-In photos found.");
+        return;
+    }
 
-                        imageURLs = githubFiles.map(f => f.download_url);
-                    } 
-                }
-            } catch (error) { 
-                console.warn("Could not query GitHub API, falling back to local or default images:", error); 
-            } 
-
-            // If GitHub API yields no photos (e.g. running outside GH Pages or rate-limited), fallback
-            if (imageURLs.length === 0) {
-                imageURLs = [...fallbackImages];
-            }
-
-            // Shuffle photo order
-            for (let i = imageURLs.length - 1; i > 0; i--) { 
-                const j = Math.floor(Math.random() * (i + 1)); 
-                [imageURLs[i], imageURLs[j]] = [imageURLs[j], imageURLs[i]]; 
-            } 
+    // Shuffle photo order
+    for (let i = imageURLs.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [imageURLs[i], imageURLs[j]] =
+            [imageURLs[j], imageURLs[i]];
+    }
 
             // Helper to preload image cleanly on both mobile safari & webview browsers
             function preloadImage(url) { 
